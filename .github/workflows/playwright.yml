@@ -4,6 +4,8 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  merge_group:
+    branches: [main]
 jobs:
   test-conditionals:
     name: Test Conditionals
@@ -15,12 +17,16 @@ jobs:
         run: |
           if [[ ${{
             (
-              github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]' ||
-              github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]'
-            ) && (
-              github.event_name == 'pull_request' && !startsWith(github.event.pull_request.title, 'chore(master): release') ||
-              github.event_name == 'merge_group' && !startsWith(github.event.merge_group.head_commit.message, 'chore(master): release') ||
-              github.event_name == 'push'
+              (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]') ||
+              (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
+            ) &&
+            (
+              (github.event_name == 'pull_request' && !startsWith(github.event.pull_request.title, 'chore(master): release')) ||
+              (github.event_name != 'pull_request')
+            ) &&
+            (
+              (github.event_name == 'merge_group' && !startsWith(github.event.merge_group.head_commit.message, 'chore(master): release')) ||
+              (github.event_name != 'merge_group')
             )
           }} == 'true' ]]; then
             echo "should-run=true" >> $GITHUB_OUTPUT
@@ -32,10 +38,15 @@ jobs:
     if: needs.test-conditionals.outputs.should-run == 'true'
     strategy:
       matrix:
-        shard: 
-          [1, 2, 3, 4]
-    name: 'Playwright (Shard ${{ matrix.shard }}/4)'
-    timeout-minutes: 60
+        shard: [1, 2, 3, 4]
+    # outputs:
+    #   shard_1: ${{ steps.shard-result.outputs.shard_1 }}
+    #   shard_2: ${{ steps.shard-result.outputs.shard_2 }}
+    #   shard_3: ${{ steps.shard-result.outputs.shard_3 }}
+    #   shard_4: ${{ steps.shard-result.outputs.shard_4 }}
+    #   shard_outputs: ${{ steps.shard-result.outputs }}
+    #   all_passed: ${{ !contains(toJSON(steps.shard-result.outputs), 'failure') }}
+    name: 'Playwright Test (Shard ${{ matrix.shard }}/4)'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -47,4 +58,56 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
+      id: shard-run
       run: npx playwright test --shard=${{ matrix.shard }}/4
+    # - name: Output Plawright Results
+    #   if: always()
+    #   id: shard-result
+    #   run: |
+    #     echo "steps.shard-run.conclusion=${{ steps.shard-run.conclusion }}"
+    #     echo "steps.shard-run.outcome=${{ steps.shard-run.outcome }}"
+    #     echo "shard_${{ matrix.shard }}=${{ steps.shard-run.conclusion }}" >> "$GITHUB_OUTPUT"
+  test-summary:
+    name: Playwright Tests Summary
+    needs: [test, test-conditionals]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Print everything
+        # run: |
+        #   echo "needs.test-conditionals.outputs.should-run=${{ needs.test-conditionals.outputs.should-run }}"
+        #   echo "needs.test.outputs.shard_1=${{ needs.test.outputs.shard_1 }}"
+        #   echo "needs.test.outputs.shard_2=${{ needs.test.outputs.shard_2 }}"
+        #   echo "needs.test.outputs.shard_3=${{ needs.test.outputs.shard_3 }}"
+        #   echo "needs.test.outputs.shard_4=${{ needs.test.outputs.shard_4 }}"
+        #   echo "needs.test.outputs.shard_outputs=${{ needs.test.outputs.shard_outputs }}"
+        #   echo "needs.test.outputs.all_passed=${{ needs.test.outputs.all_passed }}"
+        #   echo "needs.test.result=${{ needs.test.result }}"
+        #   echo "needs.*.result=${{ toJSON(needs.*.result) }}"
+        #   echo "contains(needs.*.result, 'failure')=${{ contains(needs.*.result, 'failure') }}"
+        run: |
+          echo "needs.test-conditionals.outputs.should-run=${{ needs.test-conditionals.outputs.should-run }}"
+          echo "needs.test-conditionals.outputs.should-run-BOOLREAL=${{ needs.test-conditionals.outputs.should-run != 'true' }}"
+          echo "needs.test-conditionals.outputs.should-run-BOOLSTR=${{ needs.test-conditionals.outputs.should-run == 'true' }}"
+          echo "needs.test-conditionals.outputs.should-run-BOOLRAW=${{ needs.test-conditionals.outputs.should-run == true }}"
+          echo "needs.test.result=${{ needs.test.result }}"
+      # - name: Check Playwright Tests
+      #   if: needs.test-conditionals.outputs.should-run != 'true'
+      #   run: |
+      #     echo "Tests were skipped"
+      #     exit 0
+      - name: Return success for skipped tests
+        if: needs.test-conditionals.outputs.should-run != 'true'
+        run: |
+          echo "Playwright tests were skipped"
+          exit 0
+      - name: Validate playwright matrix results
+        if: needs.test-conditionals.outputs.should-run == 'true'
+        run: |
+          if [[ "${{ needs.test.result }}" != "success" ]]; then
+            echo "Some tests failed"
+            exit 1
+          else
+            echo "All tests either passed or were skipped"
+            exit 0
+          fi
