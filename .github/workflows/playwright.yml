@@ -15,12 +15,16 @@ jobs:
         run: |
           if [[ ${{
             (
-              github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]' ||
-              github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]'
-            ) && (
-              github.event_name == 'pull_request' && !startsWith(github.event.pull_request.title, 'chore(master): release') ||
-              github.event_name == 'merge_group' && !startsWith(github.event.merge_group.head_commit.message, 'chore(master): release') ||
-              github.event_name == 'push'
+              (github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]') ||
+              (github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]')
+            ) &&
+            (
+              (github.event_name == 'pull_request' && !startsWith(github.event.pull_request.title, 'chore(master): release')) ||
+              (github.event_name != 'pull_request')
+            ) &&
+            (
+              (github.event_name == 'merge_group' && !startsWith(github.event.merge_group.head_commit.message, 'chore(master): release')) ||
+              (github.event_name != 'merge_group')
             )
           }} == 'true' ]]; then
             echo "should-run=true" >> $GITHUB_OUTPUT
@@ -81,6 +85,7 @@ jobs:
         #   echo "contains(needs.*.result, 'failure')=${{ contains(needs.*.result, 'failure') }}"
         run: |
           echo "needs.test-conditionals.outputs.should-run=${{ needs.test-conditionals.outputs.should-run }}"
+          echo "needs.test-conditionals.outputs.should-run-BOOL=${{ needs.test-conditionals.outputs.should-run == 'true' }}"
           echo "needs.test.result=${{ needs.test.result }}"
       # - name: Check Playwright Tests
       #   if: needs.test-conditionals.outputs.should-run != 'true'
