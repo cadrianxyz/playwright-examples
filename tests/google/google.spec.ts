@@ -44,7 +44,7 @@ test.describe('Google Search Tests', () => {
   });
 
   test('should have correct title', async ({ page }) => {
-    await expect(page).toHaveTitle(/Googla.*/);
+    await expect(page).toHaveTitle(/Google.*/);
   });
 
   test('should perform basic search', async ({ page }) => {
