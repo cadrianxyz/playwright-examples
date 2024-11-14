@@ -48,3 +48,14 @@ jobs:
       run: npx playwright install --with-deps
     - name: Run Playwright tests
       run: npx playwright test --shard=${{ matrix.shard }}/4
+  test-summary:
+    name: Playwright Tests Summary
+    needs: [test]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Check test matrix status
+        if: needs.test.result != 'success'
+        run: |
+          echo "Some Playwright tests failed"
+          exit 1
