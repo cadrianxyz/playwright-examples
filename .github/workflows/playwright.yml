@@ -38,6 +38,7 @@ jobs:
       shard_2: ${{ steps.shard-result.outputs.shard_2 }}
       shard_3: ${{ steps.shard-result.outputs.shard_3 }}
       shard_4: ${{ steps.shard-result.outputs.shard_4 }}
+      shard_outputs: ${{ steps.shard-result.outputs }}
       all_passed: ${{ !contains(toJSON(steps.shard-result.outputs), 'failure') }}
     name: 'Playwright Test (Shard ${{ matrix.shard }}/4)'
     runs-on: ubuntu-latest
@@ -61,10 +62,18 @@ jobs:
         echo "shard_${{ matrix.shard }}=${{ steps.shard-run.outcome }}" >> "$GITHUB_OUTPUT"
   test-summary:
     name: Playwright Tests Summary
-    needs: [test]
+    needs: [test, test-conditionals]
     runs-on: ubuntu-latest
     if: always()
     steps:
+      - name: Print everything
+        run: |
+          echo "needs.test-conditionals.outputs.should-run=${{ needs.test-conditionals.outputs.should-run }}"
+          echo "needs.test.shard_outputs=${{ needs.test.shard_outputs }}"
+          echo "needs.test.result=${{ needs.test.result }}"
+          echo "needs.test.all_passed=${{ needs.test.all_passed }}"
+          echo "needs.*.result=${{ needs.*.result }}"
+          echo "contains(needs.*.result, 'failure')=${{ contains(needs.*.result, 'failure') }}"
       - name: Check test matrix status
         if: needs.test-conditionals.outputs.should-run == 'true' && needs.test.result != 'success'
         run: |
