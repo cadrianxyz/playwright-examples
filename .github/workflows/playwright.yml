@@ -32,15 +32,14 @@ jobs:
     if: needs.test-conditionals.outputs.should-run == 'true'
     strategy:
       matrix:
-        shard: 
-          [1, 2, 3, 4]
+        shard: [1, 2, 3, 4]
     outputs:
-      output_1: ${{ steps.shard-result.outputs.shard_1 }}
-      output_2: ${{ steps.shard-result.outputs.shard_2 }}
-      output_3: ${{ steps.shard-result.outputs.shard_3 }}
-      output_4: ${{ steps.shard-result.outputs.shard_3 }}
+      shard_1: ${{ steps.shard-result.outputs.shard_1 }}
+      shard_2: ${{ steps.shard-result.outputs.shard_2 }}
+      shard_3: ${{ steps.shard-result.outputs.shard_3 }}
+      shard_4: ${{ steps.shard-result.outputs.shard_4 }}
+      all_passed: ${{ !contains(toJSON(steps.shard-result.outputs), 'failure') }}
     name: 'Playwright Test (Shard ${{ matrix.shard }}/4)'
-    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
@@ -71,8 +70,13 @@ jobs:
         run: |
           echo "Some Playwright tests failed"
           exit 1
-      - name: Tests skipped or passed
-        if: needs.test-conditionals.outputs.should-run != 'true' || needs.test.result == 'success'
+      - name: Tests passed
+        if: needs.test-conditionals.outputs.should-run == 'true' && needs.test.all_passed == 'true'
         run: |
-          echo "Tests either passed or were skipped"
+          echo "Tests passed"
+          exit 0
+      - name: Tests skipped
+        if: needs.test-conditionals.outputs.should-run != 'true'
+        run: |
+          echo "Tests were skipped"
           exit 0
