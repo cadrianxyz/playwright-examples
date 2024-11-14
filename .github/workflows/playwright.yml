@@ -57,9 +57,10 @@ jobs:
     - name: Output Plawright Results
       if: always()
       id: shard-result
-      run: 
-        echo "steps.shard-run.outcome:${{ steps.shard-run.outcome }}"
-        echo "shard_${{ matrix.shard }}=${{ steps.shard-run.outcome }}" >> "$GITHUB_OUTPUT"
+      run: |
+        echo "steps.shard-run.conclusion=${{ steps.shard-run.conclusion }}"
+        echo "steps.shard-run.outcome=${{ steps.shard-run.outcome }}"
+        echo "shard_${{ matrix.shard }}=${{ steps.shard-run.conclusion }}" >> "$GITHUB_OUTPUT"
   test-summary:
     name: Playwright Tests Summary
     needs: [test, test-conditionals]
@@ -69,10 +70,14 @@ jobs:
       - name: Print everything
         run: |
           echo "needs.test-conditionals.outputs.should-run=${{ needs.test-conditionals.outputs.should-run }}"
-          echo "needs.test.shard_outputs=${{ needs.test.shard_outputs }}"
+          echo "needs.test.outputs.shard_1=${{ needs.test.outputs.shard_1 }}"
+          echo "needs.test.outputs.shard_2=${{ needs.test.outputs.shard_2 }}"
+          echo "needs.test.outputs.shard_3=${{ needs.test.outputs.shard_3 }}"
+          echo "needs.test.outputs.shard_4=${{ needs.test.outputs.shard_4 }}"
+          echo "needs.test.outputs.shard_outputs=${{ needs.test.outputs.shard_outputs }}"
+          echo "needs.test.outputs.all_passed=${{ needs.test.outputs.all_passed }}"
           echo "needs.test.result=${{ needs.test.result }}"
-          echo "needs.test.all_passed=${{ needs.test.all_passed }}"
-          echo "needs.*.result=${{ needs.*.result }}"
+          echo "needs.*.result=${{ toJSON(needs.*.result) }}"
           echo "contains(needs.*.result, 'failure')=${{ contains(needs.*.result, 'failure') }}"
       - name: Check test matrix status
         if: needs.test-conditionals.outputs.should-run == 'true' && needs.test.result != 'success'
@@ -80,7 +85,7 @@ jobs:
           echo "Some Playwright tests failed"
           exit 1
       - name: Tests passed
-        if: needs.test-conditionals.outputs.should-run == 'true' && needs.test.all_passed == 'true'
+        if: needs.test-conditionals.outputs.should-run == 'true' && needs.test.outputs.all_passed == 'true'
         run: |
           echo "Tests passed"
           exit 0
