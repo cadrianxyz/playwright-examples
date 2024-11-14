@@ -6,6 +6,6 @@ test.describe('DuckDuckGo Search Tests', () => {
   });
 
   test('should have correct title', async ({ page }) => {
-    await expect(page).toHaveTitle(/DuckDuckGo.*/);
+    await expect(page).toHaveTitle(/DuckDuckGoAA.*/);
   });
 });
