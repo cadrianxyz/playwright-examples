@@ -101,6 +101,6 @@ jobs:
             echo "Some tests failed"
             exit 1
           else
-            echo "All tests passed or were skipped"
+            echo "All tests either passed or were skipped"
             exit 0
           fi
