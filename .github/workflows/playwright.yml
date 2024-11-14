@@ -85,7 +85,9 @@ jobs:
         #   echo "contains(needs.*.result, 'failure')=${{ contains(needs.*.result, 'failure') }}"
         run: |
           echo "needs.test-conditionals.outputs.should-run=${{ needs.test-conditionals.outputs.should-run }}"
-          echo "needs.test-conditionals.outputs.should-run-BOOL=${{ needs.test-conditionals.outputs.should-run == 'true' }}"
+          echo "needs.test-conditionals.outputs.should-run-BOOLREAL=${{ needs.test-conditionals.outputs.should-run != 'true' }}"
+          echo "needs.test-conditionals.outputs.should-run-BOOLSTR=${{ needs.test-conditionals.outputs.should-run == 'true' }}"
+          echo "needs.test-conditionals.outputs.should-run-BOOLRAW=${{ needs.test-conditionals.outputs.should-run == true }}"
           echo "needs.test.result=${{ needs.test.result }}"
       # - name: Check Playwright Tests
       #   if: needs.test-conditionals.outputs.should-run != 'true'
@@ -94,10 +96,10 @@ jobs:
       #     exit 0
       - name: Check for failed tests
         run: |
-          if [[ needs.test-conditionals.outputs.should-run != 'true' ]]; then
+          if [[ ${{ needs.test-conditionals.outputs.should-run != 'true' }} ]]; then
             echo "Playwright tests were skipped"
             exit 0
-          elif [[ needs.test.result != 'success' ]]; then
+          elif [[ ${{ needs.test.result != 'success' }} ]]; then
             echo "Some tests failed"
             exit 1
           else
