@@ -34,6 +34,11 @@ jobs:
       matrix:
         shard: 
           [1, 2, 3, 4]
+    outputs:
+      output_1: ${{ steps.shard-result.outputs.shard_1 }}
+      output_2: ${{ steps.shard-result.outputs.shard_2 }}
+      output_3: ${{ steps.shard-result.outputs.shard_3 }}
+      output_4: ${{ steps.shard-result.outputs.shard_3 }}
     name: 'Playwright Test (Shard ${{ matrix.shard }}/4)'
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -47,7 +52,14 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
+      id: shard-run
       run: npx playwright test --shard=${{ matrix.shard }}/4
+    - name: Output Plawright Results
+      if: always()
+      id: shard-result
+      run: 
+        echo "steps.shard-run.outcome:${{ steps.shard-run.outcome }}"
+        echo "shard_${{ matrix.shard }}=${{ steps.shard-run.outcome }}" >> "$GITHUB_OUTPUT"
   test-summary:
     name: Playwright Tests Summary
     needs: [test]
