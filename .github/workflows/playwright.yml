@@ -94,12 +94,15 @@ jobs:
       #   run: |
       #     echo "Tests were skipped"
       #     exit 0
-      - name: Check for failed tests
+      - name: Return success for skipped tests
+        if: needs.test-conditionals.outputs.should-run != 'true'
         run: |
-          if [[ ${{ needs.test-conditionals.outputs.should-run != 'true' }} ]]; then
-            echo "Playwright tests were skipped"
-            exit 0
-          elif [[ ${{ needs.test.result != 'success' }} ]]; then
+          echo "Playwright tests were skipped"
+          exit 0
+      - name: Validate playwright matrix results
+        if: needs.test-conditionals.outputs.should-run == 'true'
+        run: |
+          if [[ "${{ needs.test.result }}" != "success" ]]; then
             echo "Some tests failed"
             exit 1
           else
