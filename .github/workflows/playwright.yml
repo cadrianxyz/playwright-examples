@@ -1,11 +1,39 @@
 name: Playwright Tests
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 jobs:
+  test-conditionals:
+    name: Test Conditionals
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.check.outputs.should-run }}
+    steps:
+      - id: check
+        run: |
+          if [[ ${{
+            (
+              github.event_name == 'pull_request_target' && github.actor == 'dependabot[bot]' ||
+              github.event_name != 'pull_request_target' && github.actor != 'dependabot[bot]'
+            ) && (
+              github.event_name == 'pull_request' && !startsWith(github.event.pull_request.title, 'chore(master): release') ||
+              github.event_name == 'merge_group' && !startsWith(github.event.merge_group.head_commit.message, 'chore(master): release')
+            )
+          }} == 'true' ]]; then
+            echo "should-run=true" >> $GITHUB_OUTPUT
+          else
+            echo "should-run=false" >> $GITHUB_OUTPUT
+          fi
   test:
+    needs: [setup, test-conditionals]
+    if: needs.test-conditionals.outputs.should-run == 'true'
+    strategy:
+      matrix:
+        shards: 
+          ${{ needs.check-conditions.outputs.should-run == 'true' && fromJSON('[1, 2, 3, 4]') || fromJSON('[]') }}
+    name: 'Playwright (Shard ${{ matrix.shard }}/4)'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
