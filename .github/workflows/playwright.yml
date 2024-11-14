@@ -32,7 +32,7 @@ jobs:
     strategy:
       matrix:
         shards: 
-          ${{ needs.check-conditions.outputs.should-run == 'true' && fromJSON('[1, 2, 3, 4]') || fromJSON('[]') }}
+          [1, 2, 3, 4]
     name: 'Playwright (Shard ${{ matrix.shard }}/4)'
     timeout-minutes: 60
     runs-on: ubuntu-latest
@@ -46,7 +46,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --shard=${{ matrix.shard }}/4
     - uses: actions/upload-artifact@v4
       if: always()
       with:
