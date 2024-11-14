@@ -43,6 +43,10 @@ test.describe('Google Search Tests', () => {
     }
   });
 
+  test('should have correct title', async ({ page }) => {
+    await expect(page).toHaveTitle(/Googla.*/);
+  });
+
   test('should perform basic search', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
