@@ -27,7 +27,7 @@ jobs:
             echo "should-run=false" >> $GITHUB_OUTPUT
           fi
   test:
-    needs: [setup, test-conditionals]
+    needs: [test-conditionals]
     if: needs.test-conditionals.outputs.should-run == 'true'
     strategy:
       matrix:
