@@ -33,7 +33,7 @@ jobs:
       matrix:
         shards: 
           ${{ needs.check-conditions.outputs.should-run == 'true' && fromJSON('[1, 2, 3, 4]') || fromJSON('[]') }}
-    name: 'Playwright (Shard ${{ matrix.shard }}/4)'
+    name: 'Playwright Test (Shard ${{ matrix.shard }}/4)'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
