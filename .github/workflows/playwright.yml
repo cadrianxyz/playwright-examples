@@ -69,7 +69,7 @@ jobs:
     #     echo "shard_${{ matrix.shard }}=${{ steps.shard-run.conclusion }}" >> "$GITHUB_OUTPUT"
   test-summary:
     name: Playwright Tests Summary
-    needs: [test, test-conditionals]
+    needs: [test-conditionals, test]
     runs-on: ubuntu-latest
     if: always()
     steps:
