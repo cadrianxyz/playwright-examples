@@ -209,6 +209,6 @@ test.describe('Google Search Tests', () => {
 
     // Wait for and verify results
     await expect(page.getByRole('main')).toBeVisible();
-    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+    await expect(page).toHaveURL(/.*q=asdf.*/);
   });
 });
