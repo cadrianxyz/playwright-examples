@@ -58,7 +58,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 2', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -69,7 +69,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 3', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -80,7 +80,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 4', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -91,7 +91,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 5', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -102,7 +102,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 6', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -113,7 +113,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 7', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -124,7 +124,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 8', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -135,7 +135,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 9', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -146,7 +146,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 10', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -157,7 +157,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 11', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -168,7 +168,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 12', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -179,7 +179,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 13', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -190,7 +190,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search 14', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -201,7 +201,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search', async ({ page }) => {
+  test('should perform basic search FAILLL', async ({ page }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
