@@ -57,4 +57,158 @@ test.describe('Google Search Tests', () => {
     await expect(page.getByRole('main')).toBeVisible();
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
+
+  test('should perform basic search', async ({ page }) => {
+    // Find search input (trying multiple possible aria-labels)
+    const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
+    await searchInput.fill('playwright testing');
+    await searchInput.press('Enter');
+
+    // Wait for and verify results
+    await expect(page.getByRole('main')).toBeVisible();
+    await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
+  });
 });
