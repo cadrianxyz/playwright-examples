@@ -201,7 +201,7 @@ test.describe('Google Search Tests', () => {
     await expect(page).toHaveURL(/.*q=playwright\+testing.*/);
   });
 
-  test('should perform basic search FAILLL', async ({ page }) => {
+  test('should perform basic search FAIL FOR webkit', async ({ page, browserName }) => {
     // Find search input (trying multiple possible aria-labels)
     const searchInput = await page.getByRole('combobox', { name: /search|Search/i });
     await searchInput.fill('playwright testing');
@@ -209,6 +209,6 @@ test.describe('Google Search Tests', () => {
 
     // Wait for and verify results
     await expect(page.getByRole('main')).toBeVisible();
-    await expect(page).toHaveURL(/.*q=asdf.*/);
+    if (browserName === 'webkit') await expect(page).toHaveURL(/.*q=asdf.*/);
   });
 });
