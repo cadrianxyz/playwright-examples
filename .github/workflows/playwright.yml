@@ -27,6 +27,10 @@ jobs:
             (
               (github.event_name == 'merge_group' && !startsWith(github.event.merge_group.head_commit.message, 'chore(master): release')) ||
               (github.event_name != 'merge_group')
+            ) &&
+            (
+              (github.event_name == 'push' && !startsWith(github.event.push.head_commit.message, 'chore(master): release')) || 
+              (github.event_name != 'push')
             )
           }} == 'true' ]]; then
             echo "should-run=true" >> $GITHUB_OUTPUT
